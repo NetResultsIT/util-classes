@@ -50,21 +50,17 @@ public:
     /*
      *  comparison
      */
-    bool operator ==(const T& rhs) const
-    {
-        return ( this->m_currentVal == rhs ) ? true : false;
-    }
-    bool operator !=(const T& rhs) const { return (this->m_currentVal != rhs); }
+    bool operator ==(const T& rhs) const { return m_initialized && ( this->m_currentVal == rhs ); }
+    bool operator !=(const T& rhs) const { return !m_initialized || ( this->m_currentVal != rhs ); }
 
     inline bool isEmpty() const { return !m_initialized; }
-    inline bool changed() const
+    inline bool changed() const { return m_initialized && ( m_previousVal == m_currentVal ); }
+    void restore()
     {
-        return (this->m_previousVal == this->m_currentVal) ? false : true;
-    }
-    bool restore()
-    {
-        if (!m_initialized) return false;
-        m_currentVal = m_previousVal;
+        if (m_initialized)
+        {
+            m_currentVal = m_previousVal;
+        }
     }
 
     inline T current() const  { return m_currentVal;  }
