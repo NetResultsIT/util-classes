@@ -53,7 +53,7 @@ public:
     bool operator ==(const T& rhs) const { return m_initialized && ( this->m_currentVal == rhs ); }
     bool operator !=(const T& rhs) const { return !m_initialized || ( this->m_currentVal != rhs ); }
 
-    inline bool isEmpty() const { return !m_initialized; }
+    inline bool initialized() const { return m_initialized; }
     inline bool changed() const { return m_initialized && ( m_previousVal == m_currentVal ); }
     void restore()
     {
