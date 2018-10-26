@@ -3,8 +3,8 @@
  *  (c) 2106 NetResults Srl
  */
 
-#ifndef _VDK2_CACHED_VAR_H_
-#define _VDK2_CACHED_VAR_H_
+#ifndef NR_UTILCLASSES_CACHED_VAR_H_
+#define NR_UTILCLASSES_CACHED_VAR_H_
 
 /*!
  *  Class to manage a variable that caches the old value
@@ -18,6 +18,7 @@ class CachedVariable
 
     T m_currentVal;
     T m_previousVal;
+
 public:
     CachedVariable() :
         m_initialized(false)
@@ -38,8 +39,11 @@ public:
             this->m_currentVal = this->m_previousVal = rhs;
             m_initialized = true;
         }
-        this->m_previousVal = this->m_currentVal;
-        this->m_currentVal = rhs;
+        else
+        {
+            this->m_previousVal = this->m_currentVal;
+            this->m_currentVal = rhs;
+        }
         return rhs;
     }
 
@@ -51,14 +55,21 @@ public:
         return ( this->m_currentVal == rhs ) ? true : false;
     }
 
+    inline bool isEmpty() const { return !m_initialized; }
     inline bool changed() const
     {
         return (this->m_previousVal == this->m_currentVal) ? false : true;
     }
+    bool restore()
+    {
+        if (!m_initialized) return false;
+        m_currentVal = m_previousVal;
+    }
 
-    inline T current() const  { return m_currentVal; }
+    operator T() const        { return m_currentVal;  }
+    inline T current() const  { return m_currentVal;  }
     inline T old() const      { return m_previousVal; }
     inline T previous() const { return m_previousVal; }
 };
 
-#endif /* _VDK2_CACHED_VAR_H_ */
+#endif /* NR_UTILCLASSES_CACHED_VAR_H_ */
