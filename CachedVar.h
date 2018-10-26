@@ -54,6 +54,7 @@ public:
     {
         return ( this->m_currentVal == rhs ) ? true : false;
     }
+    bool operator !=(const T& rhs) const { return (this->m_currentVal != rhs); }
 
     inline bool isEmpty() const { return !m_initialized; }
     inline bool changed() const
@@ -66,7 +67,6 @@ public:
         m_currentVal = m_previousVal;
     }
 
-    operator T() const        { return m_currentVal;  }
     inline T current() const  { return m_currentVal;  }
     inline T old() const      { return m_previousVal; }
     inline T previous() const { return m_previousVal; }
